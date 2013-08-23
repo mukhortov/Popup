@@ -1,4 +1,5 @@
 #import "BackgroundView.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define FILL_OPACITY 0.9f
 #define STROKE_OPACITY 1.0f
@@ -13,8 +14,66 @@
 @implementation BackgroundView
 
 @synthesize arrowX = _arrowX;
+@synthesize webView = webView;
 
 #pragma mark -
+
+// Webview
+//- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+/*
+    NSString *urlAddress = @"http://www.ya.ru";
+    NSURL *url = [NSURL URLWithString:urlAddress];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    [[webView mainFrame] loadRequest:requestObj];
+*/
+/*
+	NSString *resourcesPath = [[NSBundle mainBundle] resourcePath];
+	NSString *htmlPath = [resourcesPath stringByAppendingString:@"/htdocs/index.html"];
+	[[webView mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:htmlPath]]];
+*/
+//	NSURL*url=[NSURL URLWithString:@"http://www.google.com"];
+//	NSURLRequest*request=[NSURLRequest requestWithURL:url];
+//	[[webView mainFrame] loadRequest:request];
+//}
+
+
+// End Webview
+
+- (void)awakeFromNib {
+	NSLog(@"Hello!");
+//	webView.
+	webView.wantsLayer = YES;
+	CALayer *layer = webView.layer;
+    layer.cornerRadius = 10.0;
+    layer.masksToBounds = YES;
+//    layer.borderColor = [NSColor blueColor].CGColor;
+//    layer.borderWidth = 1.0;
+
+
+	//Webview with Local URL
+//	NSURL *url = [[NSBundle mainBundle] URLForResource:@"index" withExtension:@"" subdirectory:@"htdocs"]; //[[NSBundle mainBundle] URLForResource:@"index" withExtension:@"html"];
+//	[[self.webView mainFrame] loadRequest:[NSURLRequest requestWithURL:url]];
+
+
+	//Webview with external URL
+	webView.customUserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3";
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://gmail.com/"]];
+	[[webView mainFrame] loadRequest:request];
+	
+
+	//Webview with loading contents using HTML String
+	//NSString *HTMLData = @"<h1/>Hello World</h1>";
+    //[[webView mainFrame] loadHTMLString:HTMLData baseURL:nil];
+
+
+	//Webview with external URL
+	//[[webView mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://m.gmail.com"]]];
+	
+
+
+
+}
+
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -63,6 +122,7 @@
     [path stroke];
     
     [NSGraphicsContext restoreGraphicsState];
+
 }
 
 #pragma mark -
